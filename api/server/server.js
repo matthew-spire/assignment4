@@ -5,12 +5,12 @@ const { MongoClient } = require('mongodb');
 
 require('dotenv').config();
 
-const DBNAME = process.env.DBNAME;
 const url = process.env.DB_URL;
+const port = process.env.API_SERVER_PORT;
 
 let db;
 
-const productList = async () => db.collection(DBNAME).find({}).toArray();
+const productList = async () => db.collection('products').find({}).toArray();
 
 const getNextSequence = async (id) => {
   const result = await db
@@ -64,7 +64,7 @@ app.use(express.static('public'));
 server.start().then(async () => {
   server.applyMiddleware({ app, path: '/graphql' });
   await connectToDb();
-  app.listen({ port: 3000 }, () =>
+  app.listen({ port: port }, () =>
     console.log('UI started on port 8000'),
     console.log('API started on port 3000 and GraphQL Studio Sandbox accessible at localhost:3000' + server.graphqlPath)
   );
