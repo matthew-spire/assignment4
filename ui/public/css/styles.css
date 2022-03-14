@@ -1,0 +1,48 @@
+h2 {
+  margin-bottom: 4px;
+}
+
+hr {
+  margin-top: 0px;
+  margin-bottom: 12px;
+}
+
+.bordered-table {
+  font-size: 18.72px;
+  border-collapse: collapse;
+  width: 50%;
+}
+
+.bordered-table th,
+td {
+  border: 1px solid silver;
+  padding: 4px;
+}
+
+.row {
+  display: flex;
+}
+
+.column {
+  width: 250px;
+  padding: 10px;
+}
+
+label {
+  display: block;
+  font-weight: bold;
+  font-size: 18.72px;
+  margin-bottom: 8px;
+}
+
+select {
+  font-size: 18.72px;
+}
+
+.form-input {
+  font-size: 18.72px;
+}
+
+button {
+  font-size: 18.72px;
+}

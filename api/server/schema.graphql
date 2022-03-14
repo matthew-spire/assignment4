@@ -1,0 +1,32 @@
+enum InventoryCategory {
+  Shirts
+  Jeans
+  Jackets
+  Sweaters
+  Accessories
+}
+
+type Product {
+  id: Int!
+  category: InventoryCategory!
+  name: String!
+  price: Float
+  imageURL: String
+}
+
+"Toned down Product, used as inputs, without server generated values."
+input ProductInputs {
+  category: InventoryCategory!
+  name: String
+  price: Float
+  imageURL: String
+}
+
+##### Top level declarations
+type Query {
+  productList: [Product!]!
+}
+
+type Mutation {
+  addProduct(product: ProductInputs!): Product!
+}
