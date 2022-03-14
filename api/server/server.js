@@ -12,20 +12,25 @@ let db;
 
 const productList = async () => db.collection(DBNAME).find({}).toArray();
 
-const addProductToDb = async (_, { product }, id) => {
-  const insertProduct = { ...product };
-  insertProduct.id = id;
-  const result = await db.collection(DBNAME).insertOne(insertProduct);
-  return db
-    .collection(DBNAME)
-    .findOne({ _id: result.insertedId });
+const getNextSequence = async (id) => {
+  const result = await db
+    .collection('counters')
+    .findOneAndUpdate(
+      { _id: id },
+      { $inc: { current: 1 } },
+      { returnOriginal: false },
+    );
+  return result.value.current;
 }
 
+const addProduct = async (_, { product }) => {
+  const newProduct = { ...product };
+  newProduct.id = await getNextSequence('products');
 
-const addProduct = (_, { product }) => {
-  return productList().then((result) => {
-    addProductToDb(_, { product }, result[result.length - 1].id + 1).then( r => r);
-  });
+  const result = await db.collection('products').insertOne(newProduct);
+  const savedProduct = await db.collection('products')
+    .findOne({ _id: result.insertedId });
+  return savedProduct;
 };
 
 const resolvers = {
