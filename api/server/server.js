@@ -6,7 +6,7 @@ const { MongoClient } = require('mongodb');
 require('dotenv').config();
 
 const DBNAME = process.env.DBNAME;
-const url = process.env.DB_URL || 'mongodb://localhost/productList';
+const url = process.env.DB_URL;
 
 let db;
 
@@ -18,7 +18,7 @@ const addProductToDb = async (_, { product }, id) => {
   const result = await db.collection(DBNAME).insertOne(insertProduct);
   return db
     .collection(DBNAME)
-    .findOne({ _id: result.insertedID });
+    .findOne({ _id: result.insertedId });
 }
 
 
